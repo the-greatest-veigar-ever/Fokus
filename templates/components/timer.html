@@ -1,0 +1,59 @@
+<div class="timer-component">
+    <div class="timer-circle">
+        <svg class="timer-ring" width="200" height="200">
+            <circle class="timer-ring-background"
+                    cx="100" cy="100" r="80"
+                    stroke="#e5e7eb"
+                    stroke-width="8"
+                    fill="transparent"/>
+            <circle class="timer-ring-progress"
+                    cx="100" cy="100" r="80"
+                    stroke="#3b82f6"
+                    stroke-width="8"
+                    fill="transparent"
+                    stroke-linecap="round"
+                    stroke-dasharray="502.4"
+                    stroke-dashoffset="502.4"
+                    transform="rotate(-90 100 100)"/>
+        </svg>
+
+        <div class="timer-content">
+            <div class="timer-time" id="timerDisplay">25:00</div>
+            <div class="timer-label" id="timerLabel">Focus Time</div>
+        </div>
+    </div>
+
+    <div class="timer-controls">
+        <button id="startPauseBtn" class="timer-btn timer-btn-primary">
+            <span class="btn-icon">
+                <span class="icon icon-play icon-md"></span>
+            </span>
+            <span class="btn-text">Start</span>
+        </button>
+
+        <button id="resetBtn" class="timer-btn timer-btn-secondary">
+            <span class="btn-icon">
+                <span class="icon icon-refresh icon-md"></span>
+            </span>
+            <span class="btn-text">Reset</span>
+        </button>
+
+        <button id="skipBtn" class="timer-btn timer-btn-outline">
+            <span class="btn-icon">
+                <span class="icon icon-skip icon-md"></span>
+            </span>
+            <span class="btn-text">Skip</span>
+        </button>
+    </div>
+
+    <div class="timer-info">
+        <div class="info-item">
+            <span class="info-label">Session</span>
+            <span class="info-value" id="sessionCount">1</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Type</span>
+            <span class="info-value" id="currentType">Focus</span>
+        </div>
+    </div>
+</div>

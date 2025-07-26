@@ -1,0 +1,270 @@
+/* ======================
+   CSS CUSTOM PROPERTIES
+   ====================== */
+
+/* Light Theme (Default) */
+.theme-light {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-hover: #f1f5f9;
+
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+
+    --accent-primary: #3b82f6;
+    --accent-primary-dark: #2563eb;
+    --accent-secondary: #8b5cf6;
+
+    --border-color: #e2e8f0;
+
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+
+    /* Focus mode gradients */
+    --focus-bg-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --focus-bg-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --focus-bg-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --focus-bg-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    --focus-bg-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+/* Dark Theme */
+.theme-dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-surface: #334155;
+    --bg-hover: #475569;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+
+    --accent-primary: #60a5fa;
+    --accent-primary-dark: #3b82f6;
+    --accent-secondary: #a78bfa;
+
+    --border-color: #475569;
+
+    --success: #34d399;
+    --warning: #fbbf24;
+    --error: #f87171;
+
+    /* Focus mode gradients for dark theme */
+    --focus-bg-1: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+    --focus-bg-2: linear-gradient(135deg, #7c2d12 0%, #9a3412 100%);
+    --focus-bg-3: linear-gradient(135deg, #164e63 0%, #0e7490 100%);
+    --focus-bg-4: linear-gradient(135deg, #14532d 0%, #166534 100%);
+    --focus-bg-5: linear-gradient(135deg, #7c2d12 0%, #a21caf 100%);
+}
+
+/* Theme transition animations */
+* {
+    transition: background-color 0.3s ease,
+                border-color 0.3s ease,
+                color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* ======================
+   FOCUS BACKGROUND CLASSES
+   ====================== */
+
+/* Nature backgrounds */
+.focus-bg-nature-1 {
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+                url('/static/images/backgrounds/nature-1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.focus-bg-nature-2 {
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+                url('/static/images/backgrounds/nature-2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Abstract backgrounds */
+.focus-bg-abstract-1 {
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+                url('/static/images/backgrounds/abstract-1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Minimal/Gradient backgrounds */
+.focus-bg-minimal {
+    background: var(--focus-bg-1);
+}
+
+.focus-bg-gradient-1 {
+    background: var(--focus-bg-1);
+}
+
+.focus-bg-gradient-2 {
+    background: var(--focus-bg-2);
+}
+
+.focus-bg-gradient-3 {
+    background: var(--focus-bg-3);
+}
+
+.focus-bg-gradient-4 {
+    background: var(--focus-bg-4);
+}
+
+.focus-bg-gradient-5 {
+    background: var(--focus-bg-5);
+}
+
+/* Solid color backgrounds */
+.focus-bg-ocean {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+
+.focus-bg-forest {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.focus-bg-sunset {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.focus-bg-midnight {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+}
+
+/* ======================
+   THEME-SPECIFIC OVERRIDES
+   ====================== */
+
+/* Dark theme specific adjustments */
+.theme-dark .preview-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.theme-dark .feature-card:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .stat-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .action-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Light theme specific adjustments */
+.theme-light .navbar {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-light .preview-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ======================
+   GLASSMORPHISM EFFECTS
+   ====================== */
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.theme-dark .glass-effect {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ======================
+   HIGH CONTRAST MODE
+   ====================== */
+
+@media (prefers-contrast: high) {
+    .theme-light {
+        --text-primary: #000000;
+        --text-secondary: #333333;
+        --border-color: #666666;
+    }
+
+    .theme-dark {
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --border-color: #999999;
+    }
+}
+
+/* ======================
+   REDUCED MOTION
+   ====================== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .timer-ring-progress {
+        transition: none !important;
+    }
+}
+
+/* ======================
+   CUSTOM SCROLLBAR
+   ====================== */
+
+/* Webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Firefox */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--bg-secondary);
+}
+
+/* ======================
+   PRINT STYLES
+   ====================== */
+
+@media print {
+    .navbar,
+    .focus-footer,
+    .focus-header,
+    .timer-controls,
+    .audio-controls,
+    .settings-panel,
+    .modal {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    .focus-container {
+        position: static !important;
+        height: auto !important;
+        background: white !important;
+    }
+}

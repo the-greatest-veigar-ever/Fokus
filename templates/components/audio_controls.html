@@ -1,0 +1,54 @@
+<div class="audio-controls">
+    <div class="audio-header">
+        <h3>
+            <span class="icon icon-headphones icon-sm"></span>
+            Ambient Sounds
+        </h3>
+        <button id="muteAllBtn" class="mute-btn">
+            <span class="icon icon-volume-x icon-sm"></span>
+        </button>
+    </div>
+
+    <div class="audio-tracks" id="audioTracks">
+        <!-- Audio tracks will be loaded dynamically -->
+    </div>
+
+    <div class="master-volume">
+        <label for="masterVolume">Master Volume</label>
+        <div class="volume-control">
+            <input type="range"
+                   id="masterVolume"
+                   min="0"
+                   max="100"
+                   value="50"
+                   class="volume-slider">
+            <span class="volume-value">50%</span>
+        </div>
+    </div>
+</div>
+
+<!-- Audio Track Template (hidden, used for dynamic generation) -->
+<template id="audioTrackTemplate">
+    <div class="audio-track">
+        <div class="track-info">
+            <div class="track-icon">
+                <span class="icon icon-music icon-md"></span>
+            </div>
+            <div class="track-name">Track Name</div>
+        </div>
+
+        <div class="track-controls">
+            <button class="track-toggle">
+                <span class="icon icon-play icon-sm"></span>
+            </button>
+            <div class="track-volume">
+                <input type="range"
+                       class="track-slider"
+                       min="0"
+                       max="100"
+                       value="0">
+                <span class="track-value">0%</span>
+            </div>
+        </div>
+    </div>
+</template>

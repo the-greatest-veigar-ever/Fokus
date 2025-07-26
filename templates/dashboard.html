@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - FocusFlow{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Your Focus Dashboard</h1>
+        <a href="{{ url_for('focus') }}" class="btn btn-primary">Start New Session</a>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <span class="icon icon-bar-chart icon-lg"></span>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number" id="totalSessions">{{ total_sessions or 0 }}</div>
+                <div class="stat-label">Total Sessions</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <span class="icon icon-check icon-lg"></span>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number" id="completedSessions">{{ completed_sessions or 0 }}</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <span class="icon icon-clock icon-lg"></span>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number" id="totalMinutes">{{ total_minutes or 0 }}</div>
+                <div class="stat-label">Minutes Focused</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <span class="icon icon-trending-up icon-lg"></span>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number" id="completionRate">
+                    {% if total_sessions and total_sessions > 0 %}
+                        {{ (completed_sessions * 100 / total_sessions) | round | int }}%
+                    {% else %}
+                        0%
+                    {% endif %}
+                </div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Progress Chart -->
+    <div class="chart-section">
+        <h2>This Week's Progress</h2>
+        <div class="chart-container">
+            <canvas id="weeklyChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Recent Sessions -->
+    <div class="sessions-section">
+        <h2>Recent Sessions</h2>
+
+        {% if recent_sessions %}
+        <div class="sessions-list">
+            {% for session in recent_sessions %}
+            <div class="session-item">
+                <div class="session-info">
+                    <div class="session-type">
+                        {% if session.session_type == 'focus' %}
+                            <span class="icon icon-target-dashboard icon-sm"></span>
+                        {% else %}
+                            <span class="icon icon-coffee-dashboard icon-sm"></span>
+                        {% endif %}
+                        {{ session.session_type|title }}
+                    </div>
+                    <div class="session-duration">
+                        {{ session.actual_duration or session.planned_duration }} minutes
+                    </div>
+                    <div class="session-time">
+                        {{ session.start_time.strftime('%m/%d %H:%M') }}
+                    </div>
+                </div>
+                <div class="session-status">
+                    {% if session.completed %}
+                        <span class="status-completed">
+                            <span class="icon icon-check icon-sm"></span>
+                            Completed
+                        </span>
+                    {% else %}
+                        <span class="status-incomplete">
+                            <span class="icon icon-pause icon-sm"></span>
+                            Incomplete
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">
+                <span class="icon icon-rocket icon-xl"></span>
+            </div>
+            <h3>No sessions yet</h3>
+            <p>Start your first focus session to see your progress here!</p>
+            <a href="{{ url_for('focus') }}" class="btn btn-primary">Start Your First Session</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <h2>Quick Start</h2>
+        <div class="action-grid">
+            <button class="action-card" onclick="startQuickSession(25, 'focus')">
+                <div class="action-icon">
+                    <span class="icon icon-target-dashboard icon-lg"></span>
+                </div>
+                <div class="action-title">25-min Focus</div>
+                <div class="action-subtitle">Classic Pomodoro</div>
+            </button>
+
+            <button class="action-card" onclick="startQuickSession(50, 'focus')">
+                <div class="action-icon">
+                    <span class="icon icon-dumbbell icon-lg"></span>
+                </div>
+                <div class="action-title">50-min Deep Work</div>
+                <div class="action-subtitle">Extended focus</div>
+            </button>
+
+            <button class="action-card" onclick="startQuickSession(5, 'break')">
+                <div class="action-icon">
+                    <span class="icon icon-coffee-dashboard icon-lg"></span>
+                </div>
+                <div class="action-title">5-min Break</div>
+                <div class="action-subtitle">Quick refresh</div>
+            </button>
+
+            <button class="action-card" onclick="startQuickSession(15, 'break')">
+                <div class="action-icon">
+                    <span class="icon icon-user icon-lg"></span>
+                </div>
+                <div class="action-title">15-min Break</div>
+                <div class="action-subtitle">Longer rest</div>
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Load statistics
+document.addEventListener('DOMContentLoaded', function() {
+    loadDashboardStats();
+});
+
+function loadDashboardStats() {
+    fetch('/api/stats')
+        .then(response => response.json())
+        .then(data => {
+            updateStatsDisplay(data);
+            createWeeklyChart(data.daily_stats);
+        })
+        .catch(error => console.error('Error loading stats:', error));
+}
+
+function updateStatsDisplay(stats) {
+    document.getElementById('totalSessions').textContent = stats.total_sessions;
+    document.getElementById('completedSessions').textContent = stats.completed_sessions;
+    document.getElementById('totalMinutes').textContent = stats.total_minutes;
+
+    const completionRate = stats.total_sessions > 0
+        ? Math.round((stats.completed_sessions / stats.total_sessions) * 100)
+        : 0;
+    document.getElementById('completionRate').textContent = completionRate + '%';
+}
+
+function createWeeklyChart(dailyStats) {
+    const canvas = document.getElementById('weeklyChart');
+    const ctx = canvas.getContext('2d');
+
+    // Simple bar chart implementation
+    const maxMinutes = Math.max(...dailyStats.map(d => d.minutes), 1);
+    const barWidth = canvas.width / dailyStats.length;
+    const maxBarHeight = canvas.height - 40;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#3b82f6';
+
+    dailyStats.forEach((day, index) => {
+        const barHeight = (day.minutes / maxMinutes) * maxBarHeight;
+        const x = index * barWidth + 10;
+        const y = canvas.height - barHeight - 20;
+
+        // Draw bar
+        ctx.fillRect(x, y, barWidth - 20, barHeight);
+
+        // Draw day label
+        ctx.fillStyle = '#666';
+        ctx.font = '12px Inter';
+        ctx.textAlign = 'center';
+        const dayName = new Date(day.date).toLocaleDateString('en', { weekday: 'short' });
+        ctx.fillText(dayName, x + (barWidth - 20) / 2, canvas.height - 5);
+
+        ctx.fillStyle = '#3b82f6';
+    });
+}
+
+function startQuickSession(duration, type) {
+    // Store session parameters and redirect to focus page
+    sessionStorage.setItem('quickSession', JSON.stringify({
+        duration: duration,
+        type: type
+    }));
+    window.location.href = '/focus';
+}
+</script>
+{% endblock %}

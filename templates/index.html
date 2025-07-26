@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Stay Focused, Get Things Done</h1>
+        <p class="hero-subtitle">
+            Enhance your productivity with ambient sounds, beautiful visuals, and smart timers
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('focus') }}" class="btn btn-primary btn-large">
+                Start Focusing Now
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-large">
+                View Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-preview">
+        <div class="preview-card">
+            <div class="preview-header">
+                <div class="preview-dots">
+                    <span class="icon-circle-dot icon-circle-red"></span>
+                    <span class="icon-circle-dot icon-circle-yellow"></span>
+                    <span class="icon-circle-dot icon-circle-green"></span>
+                </div>
+                <span class="preview-title">Focus Session</span>
+            </div>
+            <div class="preview-body">
+                <div class="preview-timer">25:00</div>
+                <div class="preview-controls">
+                    <button class="preview-btn">
+                        <span class="icon icon-play icon-sm"></span>
+                    </button>
+                    <button class="preview-btn">
+                        <span class="icon icon-pause icon-sm"></span>
+                    </button>
+                    <button class="preview-btn">
+                        <span class="icon icon-stop icon-sm"></span>
+                    </button>
+                </div>
+                <div class="preview-audio">
+                    <span class="icon icon-rain icon-sm"></span> Rain •
+                    <span class="icon icon-ocean icon-sm"></span> Ocean •
+                    <span class="icon icon-coffee icon-sm"></span> Coffee Shop
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Everything You Need to Focus</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <span class="icon icon-headphones icon-xl"></span>
+                </div>
+                <h3>Ambient Sounds</h3>
+                <p>Choose from rain, forest, ocean, coffee shop, and more calming sounds</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <span class="icon icon-timer icon-xl"></span>
+                </div>
+                <h3>Smart Timers</h3>
+                <p>Pomodoro technique, custom intervals, or continuous focus sessions</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <span class="icon icon-image icon-xl"></span>
+                </div>
+                <h3>Beautiful Visuals</h3>
+                <p>Distraction-free backgrounds that help you stay in the zone</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <span class="icon icon-bar-chart icon-xl"></span>
+                </div>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your focus sessions and see your productivity improve</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
